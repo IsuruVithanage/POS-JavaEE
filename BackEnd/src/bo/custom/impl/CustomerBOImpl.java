@@ -6,6 +6,7 @@ import dao.custom.CustomerDAO;
 import dto.CustomerDTO;
 import entity.Customer;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,18 +21,18 @@ public class CustomerBOImpl implements CustomerBO {
     }
 
     @Override
-    public String generateNewID() throws SQLException, ClassNotFoundException {
-        return customerDAO.generateNewID();
+    public String generateNewID(Connection connection) throws SQLException, ClassNotFoundException {
+        return customerDAO.generateNewID(connection);
     }
 
     @Override
-    public List<String> getCustomerIds() throws SQLException, ClassNotFoundException {
-        return customerDAO.getCustomerIds();
+    public List<String> getCustomerIds(Connection connection) throws SQLException, ClassNotFoundException {
+        return customerDAO.getCustomerIds(connection);
     }
 
     @Override
-    public boolean addCustomer(CustomerDTO customerDTO) throws SQLException, ClassNotFoundException {
-        return customerDAO.add(new Customer(
+    public boolean addCustomer(Connection connection,CustomerDTO customerDTO) throws SQLException, ClassNotFoundException {
+        return customerDAO.add(connection,new Customer(
                 customerDTO.getCustomerId(),
                 customerDTO.getCustomerTitle(),
                 customerDTO.getCustomerName(),
@@ -43,8 +44,8 @@ public class CustomerBOImpl implements CustomerBO {
     }
 
     @Override
-    public boolean deleteCustomer(String id) throws SQLException, ClassNotFoundException {
-        return customerDAO.delete(id);
+    public boolean deleteCustomer(Connection connection,String id) throws SQLException, ClassNotFoundException {
+        return customerDAO.delete(connection,id);
     }
 
     @Override
@@ -53,8 +54,8 @@ public class CustomerBOImpl implements CustomerBO {
     }
 
     @Override
-    public CustomerDTO searchCustomer(String id) throws SQLException, ClassNotFoundException {
-        Customer c = customerDAO.search(id);
+    public CustomerDTO searchCustomer(Connection connection,String id) throws SQLException, ClassNotFoundException {
+        Customer c = customerDAO.search(connection,id);
         return new CustomerDTO(
                 c.getCustomerId(),
                 c.getCustomerTitle(),
@@ -67,8 +68,8 @@ public class CustomerBOImpl implements CustomerBO {
     }
 
     @Override
-    public ArrayList<CustomerDTO> getAllCustomers() throws SQLException, ClassNotFoundException {
-        ArrayList<Customer> customers = customerDAO.getAll();
+    public ArrayList<CustomerDTO> getAllCustomers(Connection connection) throws SQLException, ClassNotFoundException {
+        ArrayList<Customer> customers = customerDAO.getAll(connection);
         ArrayList<CustomerDTO> customerDTOS = new ArrayList<>();
         for (Customer c : customers) {
             customerDTOS.add(new CustomerDTO(
