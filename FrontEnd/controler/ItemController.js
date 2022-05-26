@@ -7,9 +7,9 @@ $("#btnSaveItem").click(function () {
 
     $("#confirmSaveItem").click(function () {
         saveItem();
-        clearAllItemTxt();
-        loadAllItems();
-        generateItemID();
+        //clearAllItemTxt();
+        //loadAllItems();
+        //generateItemID();
         swal("Success!", "Item has been saved!", "success");
 
     });
@@ -17,30 +17,26 @@ $("#btnSaveItem").click(function () {
 });
 
 // Clear Item Button
-$("#btnClearItem").click(function () {
+/*$("#btnClearItem").click(function () {
     clearAllItemTxt();
     generateItemID();
 
-});
+});*/
 
 /*Clear the text fields*/
-function clearAllItemTxt() {
+/*function clearAllItemTxt() {
     $('#txtItemName,#txtQTY,#txtPrice').val("");
     $('#txtItemName,#txtQTY,#txtPrice').css('border', '2px solid #ced4da');
     $("#btnSaveItem").attr('disabled', true);
     loadAllItems();
     $("#lblprice,#lblqty,#lblItemName").text("");
-}
+}*/
 
 /*Save Item*/
 function saveItem() {
     //gather Item information
-    let itemID = $("#txtItemID").text();
-    let itemName = $("#txtItemName").val();
-    let QTY = $("#txtQTY").val();
-    let price = $("#txtPrice").val();
 
-    if (isExists(itemID)){
+    /*if (isExists(itemID)){
         for (var i of itemDB) {
             if (itemID===i.getitemID()){
                 i.setitemName(itemName);
@@ -52,14 +48,40 @@ function saveItem() {
 
     }else {
         //create Object
-        /*console.log(true);*/
+        /!*console.log(true);*!/
         var itemObject = new Item(itemID, itemName, QTY, price);
         itemDB.push(itemObject);
+    }*/
+    var itemOb = {
+        id: $("#txtItemID").text(),
+        name: $("#txtItemName").val(),
+        qty: $("#txtQTY").val(),
+        price: $("#txtPrice").val()
     }
+
+    $.ajax({
+        url: "http://localhost:8080/backend/item",
+        method: "POST",
+        contentType: "application/json", //request content type json
+        data: JSON.stringify(itemOb),
+        success: function (res) {
+            if (res.status === 200) {
+                alert(res.message);
+                //loadAllCustomers();
+            } else {
+                alert(res.data);
+            }
+        },
+        error: function (ob, textStatus, error) {
+            alert(textStatus);
+            console.log(ob.responseText);
+            console.log(cusOb);
+        }
+    });
 }
 
 //Check the
-function isExists(id) {
+/*function isExists(id) {
     for (var i of itemDB){
         if (id===i.getitemID()){
             return true;
@@ -67,15 +89,15 @@ function isExists(id) {
     }
     return false;
 
-}
+}*/
 
 /*Display Item in the Table*/
-function loadAllItems() {
+/*function loadAllItems() {
     $("#ItemTableBody").empty();
     for (var i of itemDB) {
-        /*create a html row*/
+        /!*create a html row*!/
         let row = `<tr><td>${i.getitemID()}</td><td>${i.getitemName()}</td><td>${i.getQTY()}</td><td>${i.getPrice()}</td></tr>`;
-        /*select the table body and append the row */
+        /!*select the table body and append the row *!/
         $("#ItemTableBody").append(row);
     }
 
@@ -96,10 +118,10 @@ function loadAllItems() {
         $("#btnSaveItem").attr("class","btn btn-outline-warning");
 
     });
-}
+}*/
 
 // search Item
-$("#btnSearchItem").click(function () {
+/*$("#btnSearchItem").click(function () {
     var searchID = $("#txtSearchItem").val();
 
     var response = searchItem(searchID);
@@ -112,18 +134,18 @@ $("#btnSearchItem").click(function () {
         clearAllItemTxt();
         swal("Warning!", "Item not found!", "warning");
     }
-});
+});*/
 
-function searchItem(id) {
+/*function searchItem(id) {
     for (let i = 0; i < itemDB.length; i++) {
         if (itemDB[i].getitemID() === id) {
             return itemDB[i];
         }
     }
-}
+}*/
 
 //Genereate Item ID
-function generateItemID() {
+/*function generateItemID() {
     if (itemDB.length !== 0) {
         let id = itemDB[(itemDB.length) - 1].getitemID();
         const txt = id.split('I', 2);
@@ -253,5 +275,5 @@ function setButton() {
 
 $('#btnSaveItem').click(function () {
     checkIfValid();
-});
+});*/
 //validation ended

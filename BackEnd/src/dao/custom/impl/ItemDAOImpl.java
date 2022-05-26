@@ -1,5 +1,6 @@
 package dao.custom.impl;
 
+import dao.CrudUtil;
 import dao.custom.ItemDAO;
 import entity.Item;
 
@@ -9,34 +10,39 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ItemDAOImpl implements ItemDAO {
-    @Override
+    /*@Override
     public boolean ifItemExist(String code) throws SQLException, ClassNotFoundException {
         return false;
-    }
+    }*/
 
-    @Override
+    /*@Override
     public String generateNewID() throws SQLException, ClassNotFoundException {
         return null;
-    }
+    }*/
 
-    @Override
+    /*@Override
     public List<String> getAllItemIds() throws SQLException, ClassNotFoundException {
         return null;
-    }
+    }*/
 
-    @Override
+    /*@Override
     public boolean updateQTY(String itemCode, int qty) throws SQLException, ClassNotFoundException {
         return false;
-    }
+    }*/
 
-    @Override
+    /*@Override
     public int getItemQTYOnHand(String id) throws SQLException, ClassNotFoundException {
         return 0;
-    }
+    }*/
 
     @Override
     public boolean add(Connection connection, Item item) throws SQLException, ClassNotFoundException {
-        return false;
+        return CrudUtil.executeUpdate(connection,"INSERT INTO Item (Itemcode, ItemName, Qty, Price) VALUES (?,?,?,?)",
+                item.getItemID(),
+                item.getItemName(),
+                item.getQty(),
+                item.getPrice()
+        );
     }
 
     @Override

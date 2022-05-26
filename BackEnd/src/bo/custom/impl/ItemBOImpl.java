@@ -1,61 +1,72 @@
 package bo.custom.impl;
 
 import bo.custom.ItemBO;
+import dao.DAOFactory;
+import dao.custom.ItemDAO;
 import dto.ItemDTO;
+import entity.Item;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ItemBOImpl implements ItemBO {
+    private final ItemDAO itemDAO = (ItemDAO) DAOFactory.getDAOFactory().getDAO(DAOFactory.DAOTypes.ITEM);
 
-    @Override
+    /*@Override
     public boolean ifItemExist(String id) throws SQLException, ClassNotFoundException {
         return false;
     }
-
-    @Override
+*/
+    /*@Override
     public String generateNewID() throws SQLException, ClassNotFoundException {
         return null;
-    }
+    }*/
 
-    @Override
+   /* @Override
     public List<String> getItemIds() throws SQLException, ClassNotFoundException {
         return null;
-    }
+    }*/
 
     @Override
-    public boolean addItem(ItemDTO itemDTO) throws SQLException, ClassNotFoundException {
-        return false;
+    public boolean addItem(Connection connection,ItemDTO itemDTO) throws SQLException, ClassNotFoundException {
+        System.out.println("sdsdsd");
+        return itemDAO.add(connection,new Item(
+                itemDTO.getItemID(),
+                itemDTO.getItemName(),
+                itemDTO.getQty(),
+                itemDTO.getPrice()
+        ));
     }
 
-    @Override
+    /*@Override
     public boolean deleteItem(String id) throws SQLException, ClassNotFoundException {
         return false;
-    }
+    }*/
 
-    @Override
+    /*@Override
     public boolean updateItem(ItemDTO itemDTO) throws SQLException, ClassNotFoundException {
         return false;
-    }
+    }*/
 
-    @Override
+    /*@Override
     public ItemDTO searchItem(String id) throws SQLException, ClassNotFoundException {
         return null;
-    }
+    }*/
 
-    @Override
+    /*@Override
     public ArrayList<ItemDTO> getAllItems() throws SQLException, ClassNotFoundException {
         return null;
-    }
+    }*/
 
-    @Override
+    /*@Override
     public boolean updateQTY(String itemCode, int qty) throws SQLException, ClassNotFoundException {
         return false;
-    }
+    }*/
 
-    @Override
+    /*@Override
     public int getItemQTYOnHand(String id) throws SQLException, ClassNotFoundException {
         return 0;
-    }
+    }*/
 }
