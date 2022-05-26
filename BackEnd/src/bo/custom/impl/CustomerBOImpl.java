@@ -32,6 +32,7 @@ public class CustomerBOImpl implements CustomerBO {
 
     @Override
     public boolean addCustomer(Connection connection,CustomerDTO customerDTO) throws SQLException, ClassNotFoundException {
+        System.out.println("BO add customer");
         return customerDAO.add(connection,new Customer(
                 customerDTO.getCustomerId(),
                 customerDTO.getCustomerName(),

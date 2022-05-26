@@ -68,15 +68,18 @@ public class CustomerServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String customerID = req.getParameter("customerID");
-        String customerName = req.getParameter("customerName");
-        String customerAddress = req.getParameter("customerAddress");
-        double salary = Double.parseDouble(req.getParameter("customerSalary"));
-        CustomerDTO customer = new CustomerDTO(customerID, customerName, customerAddress, salary);
+        System.out.println("Post");
+        JsonReader reader = Json.createReader(req.getReader());
+        JsonObject jsonObject = reader.readObject();
+        String customerID = jsonObject.getString("id");
+        String customerName = jsonObject.getString("name");
+        String customerAddress = jsonObject.getString("address");
+        double customerSalary = Double.parseDouble(jsonObject.getString("salary"));
 
+        CustomerDTO customer = new CustomerDTO(customerID, customerName, customerAddress, customerSalary);
 
+        /*resp.addHeader("Access-Control-Allow-Origin", "*");*/
 
-        //resp.addHeader("Access-Control-Allow-Origin", "*");
 
         PrintWriter writer = resp.getWriter();
         //resp.setContentType("application/json");
@@ -84,7 +87,7 @@ public class CustomerServlet extends HttpServlet {
             Connection connection = ds.getConnection();
             if (customerBO.addCustomer(connection,customer)){
                 JsonObjectBuilder response = Json.createObjectBuilder();
-                resp.setStatus(HttpServletResponse.SC_CREATED);//201
+                resp.setStatus(HttpServletResponse.SC_CREATED);
                 response.add("status", 200);
                 response.add("message", "Successfully Added");
                 response.add("data", "");

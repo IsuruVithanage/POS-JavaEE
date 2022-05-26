@@ -3,17 +3,20 @@
 $("#btnSaveCust").click(function () {
 
     // remove all the row click events added before
-    $("#custTable>tr").off("click");
+    //$("#custTable>tr").off("click");
 
     $("#confirmSaveCust").off("click");
 
     $("#confirmSaveCust").click(function () {
+        console.log("start");
         saveCustomer();
-        clearAllCustTxt();
+ /*        clearAllCustTxt();
         loadAllCustomers();
-        generateCustID();
+        generateCustID();*/
         swal("Success!", "Customer has been saved!", "success");
     });
+
+
 });
 
 // Clear Customer Button
@@ -47,40 +50,66 @@ function clearAllCustTxt() {
     loadAllCustomers();
     $("#lblcusid,#lblcusname,#lblcusaddress,#lblcussalary").text("");
     $("#btnSaveCust").html("Save Customer");
-    $("#btnSaveCust").attr("class","btn btn-outline-primary");
+    $("#btnSaveCust").attr("class", "btn btn-outline-primary");
 }
 
 /*Save Customer*/
 function saveCustomer() {
-    //gather customer information
-    let customerID = $("#txtCustID").text();
+    console.log("save");
+    //gather customer information/**/
+   /* let customerID = $("#txtCustID").text();
     let customerName = $("#txtCustName").val();
     let customerAddress = $("#txtCustAddress").val();
-    let customerSalary = $("#txtCustSalary").val();
+    let customerSalary = $("#txtCustSalary").val();*/
+    /*
+        if (isExists(customerID)){
+            for (var i of customerDB) {
+                if (customerID===i.getCustID()){
+                    i.setCustName(customerName);
+                    i.setCustAddress(customerAddress);
+                    i.setCustSalary(customerSalary);
 
-    if (isExists(customerID)){
-        for (var i of customerDB) {
-            if (customerID===i.getCustID()){
-                i.setCustName(customerName);
-                i.setCustAddress(customerAddress);
-                i.setCustSalary(customerSalary);
-                return;
+                    return;
+                }
             }
-        }
 
-    }else {
-        //create Object
-        /*console.log(true);*/
-        var customerObject = new Customer(customerID, customerName, customerAddress, customerSalary);
-        customerDB.push(customerObject);
-
+        }else {*/
+    /*       //create Object
+           /!*console.log(true);*!/
+           var customerObject = new Customer(customerID, customerName, customerAddress, customerSalary);
+           customerDB.push(customerObject);*/
+    var cusOb = {
+        id: $("#txtCustID").text(),
+        name: $("#txtCustName").val(),
+        address: $("#txtCustAddress").val(),
+        salary: $("#txtCustSalary").val()
     }
+
+    $.ajax({
+        url: "http://localhost:8080/backend/customer",
+        method: "POST",
+        contentType: "application/json", //request content type json
+        data: JSON.stringify(cusOb),
+        success: function (res) {
+            if (res.status === 200) {
+                alert(res.message);
+                //loadAllCustomers();
+            } else {
+                alert(res.data);
+            }
+        },
+        error: function (ob, textStatus, error) {
+            alert(textStatus);
+            console.log(ob.responseText);
+        }
+    });
+
 }
 
 //Check the
 function isExists(id) {
-    for (var i of customerDB){
-        if (id===i.getCustID()){
+    for (var i of customerDB) {
+        if (id === i.getCustID()) {
             return true;
         }
     }
@@ -90,9 +119,9 @@ function isExists(id) {
 
 /*Delete Customer*/
 function deleteCustomer(id) {
-    for (var i in customerDB){
-        if (id===customerDB[i].getCustID()){
-            customerDB.splice(i,1);
+    for (var i in customerDB) {
+        if (id === customerDB[i].getCustID()) {
+            customerDB.splice(i, 1);
             return;
         }
     }
@@ -111,7 +140,7 @@ function loadAllCustomers() {
 
     //bind the events to the table rows after the row was added
     $("#custTableBody>tr").click(function () {
-        let cusID= $(this).children(":eq(0)").text();
+        let cusID = $(this).children(":eq(0)").text();
         let cusName = $(this).children(":eq(1)").text();
         let cusAddress = $(this).children(":eq(2)").text();
         let cusTP = $(this).children(":eq(3)").text();
@@ -123,7 +152,7 @@ function loadAllCustomers() {
         $("#txtCustSalary").val(cusTP);
 
         $("#btnSaveCust").html("Update Customer");
-        $("#btnSaveCust").attr("class","btn btn-outline-warning");
+        $("#btnSaveCust").attr("class", "btn btn-outline-warning");
 
     });
 }

@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        .tbl-wrap{
+        .tbl-wrap {
             height: 100px;
             overflow-y: auto;
         }
@@ -96,27 +96,40 @@
     <section class="container-fluid">
         <section class="row">
             <!--Image-->
-            <img src="../assets/imges/logo.jpg" class="img-fluid" alt="" style="width: 550px; margin-left: 365px; margin-top:0">
+            <img src="../assets/imges/logo.jpg" class="img-fluid" alt=""
+                 style="width: 550px; margin-left: 365px; margin-top:0">
         </section>
 
         <section class="row" style="width: 1282px">
             <!--Image-->
-            <div class="col-4" style="background-color: #e3fded; width: 300px; height: 355px; margin-left: 115px; border: 1px solid #008000; border-radius: 15px">
-                <img src="../assets/imges/customers.png" class="img-fluid" alt="" style="width: 120px; margin-left: 71px; margin-top: 36px">
+            <div class="col-4"
+                 style="background-color: #e3fded; width: 300px; height: 355px; margin-left: 115px; border: 1px solid #008000; border-radius: 15px">
+                <img src="../assets/imges/customers.png" class="img-fluid" alt=""
+                     style="width: 120px; margin-left: 71px; margin-top: 36px">
                 <h4 style="margin-left: 64px; margin-top: 18px; font-size: 30px; font-family: fantasy">Customers</h4>
-                <h4 id="totCust" style="margin-left: 104px; margin-top: 28px; font-size: 60px; color:#004400; font-family: fantasy">50</h4>
+                <h4 id="totCust"
+                    style="margin-left: 104px; margin-top: 28px; font-size: 60px; color:#004400; font-family: fantasy">
+                    50</h4>
 
             </div>
-            <div class="col-4" style="background-color: #e3fded; width: 300px; height: 355px; margin-left: 127px; border: 1px solid #008000; border-radius: 15px">
-                <img src="../assets/imges/items.png" class="img-fluid" alt="" style="width: 120px; margin-left: 75px; margin-top: 36px">
+            <div class="col-4"
+                 style="background-color: #e3fded; width: 300px; height: 355px; margin-left: 127px; border: 1px solid #008000; border-radius: 15px">
+                <img src="../assets/imges/items.png" class="img-fluid" alt=""
+                     style="width: 120px; margin-left: 75px; margin-top: 36px">
                 <h4 style="margin-left: 101px; margin-top: 18px; font-size: 30px; font-family: fantasy">Items</h4>
-                <h4 id="totItem" style="margin-left: 109px; margin-top: 28px; font-size: 60px; color:#004400; font-family: fantasy">50</h4>
+                <h4 id="totItem"
+                    style="margin-left: 109px; margin-top: 28px; font-size: 60px; color:#004400; font-family: fantasy">
+                    50</h4>
 
             </div>
-            <div class="col-4" style="background-color: #e3fded; width: 300px; height: 355px; margin-left: 127px; border: 1px solid #008000; border-radius: 15px">
-                <img src="../assets/imges/orders.png" class="img-fluid" alt="" style="width: 120px; margin-left: 71px; margin-top: 36px">
+            <div class="col-4"
+                 style="background-color: #e3fded; width: 300px; height: 355px; margin-left: 127px; border: 1px solid #008000; border-radius: 15px">
+                <img src="../assets/imges/orders.png" class="img-fluid" alt=""
+                     style="width: 120px; margin-left: 71px; margin-top: 36px">
                 <h4 style="margin-left: 90px; margin-top: 18px; font-size: 30px; font-family: fantasy">Orders</h4>
-                <h4 id="totOrder" style="margin-left: 109px; margin-top: 28px; font-size: 60px; color:#004400; font-family: fantasy">50</h4>
+                <h4 id="totOrder"
+                    style="margin-left: 109px; margin-top: 28px; font-size: 60px; color:#004400; font-family: fantasy">
+                    50</h4>
 
             </div>
         </section>
@@ -162,54 +175,57 @@
                 </section>
 
                 <!--Customer ID-->
-                <section class="row mt-4">
-                    <div class="col-2">
-                        <h5 style="color: #87de9b">CustomerID: </h5>
-                    </div>
+                <form id="customerForm">
+                    <section class="row mt-4">
+                        <div class="col-2">
+                            <h5 style="color: #87de9b">CustomerID: </h5>
+                        </div>
 
-                    <div class="col-2 ps-0">
-                        <h5 id="txtCustID">C00-001</h5>
-                    </div>
-                </section>
+                        <div class="col-2 ps-0">
+                            <h5 id="txtCustID">C00-001</h5>
+                        </div>
+                    </section>
 
-                <section class="row mt-1">
-                    <!--CustName-->
-                    <div class="col-6">
-                        <label for="txtCustName" class="form-label">Customer Name</label>
-                        <input type="email" class="form-control" id="txtCustName"
-                               aria-describedby="emailHelp" placeholder="Name">
-                        <p><small class="text-danger pl-1" id="lblcusname"></small></p>
-                    </div>
+                    <section class="row mt-1">
+                        <!--CustName-->
+                        <div class="col-6">
+                            <label for="txtCustName" class="form-label">Customer Name</label>
+                            <input type="email" class="form-control" id="txtCustName"
+                                   aria-describedby="emailHelp" placeholder="Name" name="customerName">
+                            <p><small class="text-danger pl-1" id="lblcusname"></small></p>
+                        </div>
 
-                    <!--CustSalary-->
-                    <div class="col-5">
-                        <label for="txtCustSalary" class="form-label">Customer Salary</label>
-                        <input type="email" class="form-control" id="txtCustSalary"
-                               aria-describedby="emailHelp" placeholder="Salary">
-                        <p><small class="text-danger pl-1" id="lblcussalary"></small></p>
-                    </div>
-                </section>
+                        <!--CustSalary-->
+                        <div class="col-5">
+                            <label for="txtCustSalary" class="form-label">Customer Salary</label>
+                            <input type="email" class="form-control" id="txtCustSalary"
+                                   aria-describedby="emailHelp" placeholder="Salary" name="customerSalary">
+                            <p><small class="text-danger pl-1" id="lblcussalary"></small></p>
+                        </div>
+                    </section>
 
-                <section class="row">
-                    <!--CustAddress-->
-                    <div class="col-6">
-                        <label for="txtCustAddress" class="form-label">Customer Address</label>
-                        <input type="email" class="form-control" id="txtCustAddress"
-                               aria-describedby="emailHelp" placeholder="Name">
-                        <p><small class="text-danger pl-1" id="lblcusaddress"></small></p>
-                    </div>
+                    <section class="row">
+                        <!--CustAddress-->
+                        <div class="col-6">
+                            <label for="txtCustAddress" class="form-label">Customer Address</label>
+                            <input type="email" class="form-control" id="txtCustAddress"
+                                   aria-describedby="emailHelp" placeholder="Name" name="customerAddress">
+                            <p><small class="text-danger pl-1" id="lblcusaddress"></small></p>
+                        </div>
 
-                    <!--Buttons-->
-                    <div class="col-6 mt-4 pt-2">
-                        <button type="button" class="btn btn-danger" id="btnDeleteCust" data-bs-toggle="modal"
-                                data-bs-target="#delCust">Delete
-                        </button>
-                        <button type="submit" class="btn btn-primary" id="btnClearCust">Clear</button>
-                        <button class="btn btn-outline-info ms-3" type="button" id="btnSaveCust" data-bs-toggle="modal"
-                                data-bs-target="#sveCust">Save Customer
-                        </button>
-                    </div>
-                </section>
+                        <!--Buttons-->
+                        <div class="col-6 mt-4 pt-2">
+                            <button type="button" class="btn btn-danger" id="btnDeleteCust" data-bs-toggle="modal"
+                                    data-bs-target="#delCust">Delete
+                            </button>
+                            <button type="submit" class="btn btn-primary" id="btnClearCust">Clear</button>
+                            <button class="btn btn-outline-info ms-3" type="button" id="btnSaveCust"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#sveCust">Save Customer
+                            </button>
+                        </div>
+                    </section>
+                </form>
 
                 <!--Table-->
                 <section class="row mt-5 ">
@@ -582,11 +598,13 @@
                 <div class="row mb-3 mt-4">
                     <div class="col-2 ms-5">
                         <button type="button" class="btn btn-primary" id="cancelOrder" data-bs-toggle="modal"
-                                data-bs-target="#delOrder">Cancel</button>
+                                data-bs-target="#delOrder">Cancel
+                        </button>
                     </div>
                     <div class="col-7 ps-4 ms-3">
                         <button type="button" class="btn btn-success" id="btnPlaceOrder" data-bs-toggle="modal"
-                                data-bs-target="#sveOrder">Purchase</button>
+                                data-bs-target="#sveOrder">Purchase
+                        </button>
                     </div>
 
                 </div>
@@ -665,20 +683,20 @@
 
 <script src="../assets/bootstrap/js/bootstrap.min.js"></script>
 <script src="../assets/jQuerry/jquery-3.6.0.min.js"></script>
-<script src="../../BackEnd/db/DB.js"></script>
-<script src="../../BackEnd/model/Customer.js"></script>
-<script src="../../BackEnd/model/Item.js"></script>
-<script src="../../BackEnd/model/Order.js"></script>
-<script src="../../BackEnd/model/ItemDetail.js"></script>
-<script src="../../BackEnd/controler/CustomerControler.js"></script>
-<script src="../../BackEnd/controler/ItemController.js"></script>
-<script src="../../BackEnd/controler/OrderController.js"></script>
-<script src="../../BackEnd/controler/HomeController.js"></script>
+
+<script src="../model/Customer.js"></script>
+<script src="../model/Item.js"></script>
+<script src="../model/Order.js"></script>
+<script src="../model/ItemDetail.js"></script>
+<script src="../controler/CustomerControler.js"></script>
+<script src="../controler/ItemController.js"></script>
+<script src="../controler/OrderController.js"></script>
+<script src="../controler/HomeController.js"></script>
 <script src="../assets/sweetalert.min.js"></script>
 <script>
     /*Changing Interfaces*/
     $("#mh").css("display", "block");
-    loadHomeData();
+    //loadHomeData();
     $("#mc").css("display", "none");
     $("#mi").css("display", "none");
     $("#mo").css("display", "none");
@@ -689,7 +707,7 @@
         $("#mi").css("display", "none");
         $("#mo").css("display", "none");
         $("#mh").css("display", "none");
-        generateCustID();
+        //generateCustID();
     });
 
     $("#items").click(function () {
@@ -697,8 +715,8 @@
         $("#mi").css("display", "block");
         $("#mo").css("display", "none");
         $("#mh").css("display", "none");
-        generateItemID();
-        loadAllItems();
+        //generateItemID();
+        //loadAllItems();
 
     });
 
@@ -707,10 +725,10 @@
         $("#mi").css("display", "none");
         $("#mh").css("display", "none");
         $("#mo").css("display", "block");
-        loadAllCustID();
-        loadAllItemID();
-        generateOrderID();
-        $("#btnupdateOitem,#btnPlaceOrder,#btndeleteoitem,#cancelOrder,#btnAddItem").attr('disabled', true);
+        //loadAllCustID();
+        //loadAllItemID();
+        //generateOrderID();
+        //$("#btnupdateOitem,#btnPlaceOrder,#btndeleteoitem,#cancelOrder,#btnAddItem").attr('disabled', true);
     });
 
     $("#home").click(function () {
@@ -718,11 +736,8 @@
         $("#mi").css("display", "none");
         $("#mh").css("display", "block");
         $("#mo").css("display", "none");
-        loadHomeData();
+        //loadHomeData();
     });
-
-
-
 
 </script>
 </body>
