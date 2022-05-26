@@ -3,16 +3,16 @@
 $("#btnSaveCust").click(function () {
 
     // remove all the row click events added before
-    //$("#custTable>tr").off("click");
+    $("#custTable>tr").off("click");
 
     $("#confirmSaveCust").off("click");
 
     $("#confirmSaveCust").click(function () {
         console.log("start");
         saveCustomer();
- /*        clearAllCustTxt();
+        clearAllCustTxt();
         loadAllCustomers();
-        generateCustID();*/
+        generateCustID();
         swal("Success!", "Customer has been saved!", "success");
     });
 
@@ -20,11 +20,11 @@ $("#btnSaveCust").click(function () {
 });
 
 // Clear Customer Button
-/*$("#btnClearCust").click(function () {
+$("#btnClearCust").click(function () {
     clearAllCustTxt();
     generateCustID();
 
-});*/
+});
 
 //Set Delete button
 $("#btnDeleteCust").click(function () {
@@ -32,7 +32,7 @@ $("#btnDeleteCust").click(function () {
 
     $("#confirmdeleteCust").click(function () {
         deleteCustomer($("#txtCustID").text());
-        //clearAllCustTxt();
+        clearAllCustTxt();
         loadAllCustomers();
         generateCustID();
 
@@ -41,16 +41,16 @@ $("#btnDeleteCust").click(function () {
 
 });
 /*Clear the text fields*/
-/*function clearAllCustTxt() {
+function clearAllCustTxt() {
     $('#txtCustName,#txtCustAddress,#txtCustSalary').val("");
-    $('#txtCustName,#txtCustAddress,#txtCustSalary').css('border', '2px solid #ced4da');
-    $('#txtCustName').focus();
-    $("#btnSaveCust").attr('disabled', true);
+/*    $('#txtCustName,#txtCustAddress,#txtCustSalary').css('border', '2px solid #ced4da');*/
+/*    $('#txtCustName').focus();
+    $("#btnSaveCust").attr('disabled', true);*/
     loadAllCustomers();
-    $("#lblcusid,#lblcusname,#lblcusaddress,#lblcussalary").text("");
+/*    $("#lblcusid,#lblcusname,#lblcusaddress,#lblcussalary").text("");
     $("#btnSaveCust").html("Save Customer");
-    $("#btnSaveCust").attr("class", "btn btn-outline-primary");
-}*/
+    $("#btnSaveCust").attr("class", "btn btn-outline-primary");*/
+}
 
 /*Save Customer*/
 function saveCustomer() {
@@ -194,7 +194,7 @@ function bindClickEvents(){
 }
 
 // search customer
-/*$("#btnSearchCust").click(function () {
+$("#btnSearchCust").click(function () {
     var searchID = $("#txtSearchCust").val();
 
     var response = searchCustomer(searchID);
@@ -207,16 +207,16 @@ function bindClickEvents(){
         clearAllCustTxt();
         alert("No Such a Customer");
     }
-});*/
+});
 
 //Serach Customer
-/*function searchCustomer(id) {
+function searchCustomer(id) {
     for (let i = 0; i < customerDB.length; i++) {
         if (customerDB[i].getCustID() == id) {
             return customerDB[i];
         }
     }
-}*/
+}
 
 //Genereate Customer ID
 function generateCustID() {

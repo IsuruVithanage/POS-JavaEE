@@ -8,7 +8,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class CustomerDAOImpl implements CustomerDAO {
 
@@ -31,7 +30,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     @Override
     public String generateNewID(Connection connection) throws SQLException, ClassNotFoundException {
-        ResultSet rst = CrudUtil.executeQuery(connection,"SELECT CustID FROM Customer ORDER BY CustID DESC LIMIT 1;");
+        ResultSet rst = CrudUtil.executeQuery(connection, "SELECT CustID FROM Customer ORDER BY CustID DESC LIMIT 1;");
         if (rst.next()) {
             String id = rst.getString(1);
             int newCustomerId = Integer.parseInt(id.replace("C", "")) + 1;
@@ -42,9 +41,9 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
 
     @Override
-    public boolean add(Connection connection,Customer customer) throws SQLException, ClassNotFoundException {
+    public boolean add(Connection connection, Customer customer) throws SQLException, ClassNotFoundException {
         System.out.println("Add cust DAO");
-        return CrudUtil.executeUpdate(connection,"INSERT INTO Customer (CustID, CustName, CustAddress, Salary) VALUES (?,?,?,?)",
+        return CrudUtil.executeUpdate(connection, "INSERT INTO Customer (CustID, CustName, CustAddress, Salary) VALUES (?,?,?,?)",
                 customer.getCustomerId(),
                 customer.getCustomerName(),
                 customer.getCustomerAddress(),
@@ -52,8 +51,8 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
 
     @Override
-    public boolean delete(Connection connection,String s) throws SQLException, ClassNotFoundException {
-        return CrudUtil.executeUpdate(connection,"DELETE FROM Customer WHERE CustID=?", s);
+    public boolean delete(Connection connection, String s) throws SQLException, ClassNotFoundException {
+        return CrudUtil.executeUpdate(connection, "DELETE FROM Customer WHERE CustID=?", s);
     }
 
     /*@Override
@@ -61,9 +60,9 @@ public class CustomerDAOImpl implements CustomerDAO {
         return false;
     }*/
 
-    /*@Override
-    public Customer search(Connection connection,String s) throws SQLException, ClassNotFoundException {
-        ResultSet rst = CrudUtil.executeQuery(connection,"SELECT * FROM Customer WHERE CustID=?", s);
+    @Override
+    public Customer search(Connection connection, String s) throws SQLException, ClassNotFoundException {
+        ResultSet rst = CrudUtil.executeQuery(connection, "SELECT * FROM Customer WHERE CustID=?", s);
         rst.next();
         return new Customer(
                 s,
@@ -72,12 +71,12 @@ public class CustomerDAOImpl implements CustomerDAO {
                 rst.getDouble(4)
 
         );
-    }*/
+    }
 
     @Override
     public ArrayList<Customer> getAll(Connection connection) throws SQLException, ClassNotFoundException {
         ArrayList<Customer> allCustomers = new ArrayList<>();
-        ResultSet rst = CrudUtil.executeQuery(connection,"SELECT * FROM Customer");
+        ResultSet rst = CrudUtil.executeQuery(connection, "SELECT * FROM Customer");
         while (rst.next()) {
             allCustomers.add(new Customer(
                     rst.getString(1),

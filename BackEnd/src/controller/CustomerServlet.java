@@ -71,6 +71,8 @@ public class CustomerServlet extends HttpServlet {
                     responsegetall.add("data", arrayBuilder.build());
                     writer.print(responsegetall.build());
 
+                case "SEARCH":
+
 
             }
 
@@ -122,6 +124,7 @@ public class CustomerServlet extends HttpServlet {
             throwables.printStackTrace();
         }
     }
+
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String customerID = req.getParameter("CusID");

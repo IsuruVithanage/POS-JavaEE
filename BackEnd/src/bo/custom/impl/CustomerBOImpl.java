@@ -50,16 +50,16 @@ public class CustomerBOImpl implements CustomerBO {
         return false;
     }*/
 
-    /*@Override
-    public CustomerDTO searchCustomer(Connection connection,String id) throws SQLException, ClassNotFoundException {
-        Customer c = customerDAO.search(connection,id);
+    @Override
+    public CustomerDTO searchCustomer(Connection connection, String id) throws SQLException, ClassNotFoundException {
+        Customer c = customerDAO.search(connection, id);
         return new CustomerDTO(
                 c.getCustomerId(),
                 c.getCustomerName(),
                 c.getCustomerAddress(),
                 c.getSalary()
         );
-    }*/
+    }
 
     @Override
     public ArrayList<CustomerDTO> getAllCustomers(Connection connection) throws SQLException, ClassNotFoundException {

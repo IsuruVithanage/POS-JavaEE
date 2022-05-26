@@ -20,7 +20,7 @@ public interface CustomerBO extends SuperBO {
 
     //boolean updateCustomer(CustomerDTO customerDTO) throws SQLException, ClassNotFoundException;
 
-    //CustomerDTO searchCustomer(Connection connection,String id) throws SQLException, ClassNotFoundException;
+    CustomerDTO searchCustomer(Connection connection, String id) throws SQLException, ClassNotFoundException;
 
     ArrayList<CustomerDTO> getAllCustomers(Connection connection) throws SQLException, ClassNotFoundException;
 }
