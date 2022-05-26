@@ -45,12 +45,9 @@ public class CustomerDAOImpl implements CustomerDAO {
     public boolean add(Connection connection,Customer customer) throws SQLException, ClassNotFoundException {
         return CrudUtil.executeUpdate(connection,"INSERT INTO Customer (CustID, CustTitle, CustName, CustAddress, City, Province, PostalCode) VALUES (?,?,?,?,?,?,?)",
                 customer.getCustomerId(),
-                customer.getCustomerTitle(),
                 customer.getCustomerName(),
                 customer.getCustomerAddress(),
-                customer.getCity(),
-                customer.getProvince(),
-                customer.getPostalCode());
+                customer.getSalary());
     }
 
     @Override
@@ -71,10 +68,7 @@ public class CustomerDAOImpl implements CustomerDAO {
                 s,
                 rst.getString(2),
                 rst.getString(3),
-                rst.getString(4),
-                rst.getString(5),
-                rst.getString(6),
-                rst.getString(7)
+                rst.getDouble(4)
 
         );
     }
@@ -88,10 +82,7 @@ public class CustomerDAOImpl implements CustomerDAO {
                     rst.getString(1),
                     rst.getString(2),
                     rst.getString(3),
-                    rst.getString(4),
-                    rst.getString(5),
-                    rst.getString(6),
-                    rst.getString(7)
+                    rst.getDouble(4)
             ));
         }
         return allCustomers;

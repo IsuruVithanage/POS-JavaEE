@@ -34,12 +34,9 @@ public class CustomerBOImpl implements CustomerBO {
     public boolean addCustomer(Connection connection,CustomerDTO customerDTO) throws SQLException, ClassNotFoundException {
         return customerDAO.add(connection,new Customer(
                 customerDTO.getCustomerId(),
-                customerDTO.getCustomerTitle(),
                 customerDTO.getCustomerName(),
                 customerDTO.getCustomerAddress(),
-                customerDTO.getCity(),
-                customerDTO.getProvince(),
-                customerDTO.getPostalCode()
+                customerDTO.getSalary()
         ));
     }
 
@@ -58,12 +55,9 @@ public class CustomerBOImpl implements CustomerBO {
         Customer c = customerDAO.search(connection,id);
         return new CustomerDTO(
                 c.getCustomerId(),
-                c.getCustomerTitle(),
                 c.getCustomerName(),
                 c.getCustomerAddress(),
-                c.getCity(),
-                c.getProvince(),
-                c.getPostalCode()
+                c.getSalary()
         );
     }
 
@@ -74,12 +68,9 @@ public class CustomerBOImpl implements CustomerBO {
         for (Customer c : customers) {
             customerDTOS.add(new CustomerDTO(
                     c.getCustomerId(),
-                    c.getCustomerTitle(),
                     c.getCustomerName(),
                     c.getCustomerAddress(),
-                    c.getCity(),
-                    c.getProvince(),
-                    c.getPostalCode()
+                    c.getSalary()
             ));
         }
         return customerDTOS;
