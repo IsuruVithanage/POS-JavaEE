@@ -162,7 +162,7 @@
                         <form>
                             <div>
                                 <label for="txtSearchCust" class="form-label">Search Customer</label>
-                                <input type="email" class="form-control" id="txtSearchCust"
+                                <input type="text" class="form-control" id="txtSearchCust"
                                        aria-describedby="emailHelp" placeholder="ID">
                             </div>
                         </form>
@@ -170,7 +170,7 @@
 
                     <!--Search Button-->
                     <div class="col-2 mt-3 pt-3 ps-2">
-                        <button type="submit" class="btn btn-outline-success" id="btnSearchCust">Search</button>
+                        <button type="button" class="btn btn-outline-success" id="btnSearchCust">Search</button>
                     </div>
                 </section>
 
@@ -182,7 +182,7 @@
                         </div>
 
                         <div class="col-2 ps-0">
-                            <h5 id="txtCustID">C00-001</h5>
+                            <h5 id="txtCustID">C001</h5>
                         </div>
                     </section>
 
@@ -190,7 +190,7 @@
                         <!--CustName-->
                         <div class="col-6">
                             <label for="txtCustName" class="form-label">Customer Name</label>
-                            <input type="email" class="form-control" id="txtCustName"
+                            <input type="text" class="form-control" id="txtCustName"
                                    aria-describedby="emailHelp" placeholder="Name" name="customerName">
                             <p><small class="text-danger pl-1" id="lblcusname"></small></p>
                         </div>
@@ -198,7 +198,7 @@
                         <!--CustSalary-->
                         <div class="col-5">
                             <label for="txtCustSalary" class="form-label">Customer Salary</label>
-                            <input type="email" class="form-control" id="txtCustSalary"
+                            <input type="text" class="form-control" id="txtCustSalary"
                                    aria-describedby="emailHelp" placeholder="Salary" name="customerSalary">
                             <p><small class="text-danger pl-1" id="lblcussalary"></small></p>
                         </div>
@@ -208,7 +208,7 @@
                         <!--CustAddress-->
                         <div class="col-6">
                             <label for="txtCustAddress" class="form-label">Customer Address</label>
-                            <input type="email" class="form-control" id="txtCustAddress"
+                            <input type="text" class="form-control" id="txtCustAddress"
                                    aria-describedby="emailHelp" placeholder="Name" name="customerAddress">
                             <p><small class="text-danger pl-1" id="lblcusaddress"></small></p>
                         </div>
@@ -218,7 +218,7 @@
                             <button type="button" class="btn btn-danger" id="btnDeleteCust" data-bs-toggle="modal"
                                     data-bs-target="#delCust">Delete
                             </button>
-                            <button type="submit" class="btn btn-primary" id="btnClearCust">Clear</button>
+                            <button type="button" class="btn btn-primary" id="btnClearCust">Clear</button>
                             <button class="btn btn-outline-info ms-3" type="button" id="btnSaveCust"
                                     data-bs-toggle="modal"
                                     data-bs-target="#sveCust">Save Customer
@@ -707,7 +707,8 @@
         $("#mi").css("display", "none");
         $("#mo").css("display", "none");
         $("#mh").css("display", "none");
-        //generateCustID();
+        generateCustID();
+        loadAllCustomers();
     });
 
     $("#items").click(function () {

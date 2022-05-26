@@ -20,11 +20,11 @@ $("#btnSaveCust").click(function () {
 });
 
 // Clear Customer Button
-$("#btnClearCust").click(function () {
+/*$("#btnClearCust").click(function () {
     clearAllCustTxt();
     generateCustID();
 
-});
+});*/
 
 //Set Delete button
 $("#btnDeleteCust").click(function () {
@@ -32,7 +32,7 @@ $("#btnDeleteCust").click(function () {
 
     $("#confirmdeleteCust").click(function () {
         deleteCustomer($("#txtCustID").text());
-        clearAllCustTxt();
+        //clearAllCustTxt();
         loadAllCustomers();
         generateCustID();
 
@@ -40,9 +40,8 @@ $("#btnDeleteCust").click(function () {
 
 
 });
-
 /*Clear the text fields*/
-function clearAllCustTxt() {
+/*function clearAllCustTxt() {
     $('#txtCustName,#txtCustAddress,#txtCustSalary').val("");
     $('#txtCustName,#txtCustAddress,#txtCustSalary').css('border', '2px solid #ced4da');
     $('#txtCustName').focus();
@@ -51,7 +50,7 @@ function clearAllCustTxt() {
     $("#lblcusid,#lblcusname,#lblcusaddress,#lblcussalary").text("");
     $("#btnSaveCust").html("Save Customer");
     $("#btnSaveCust").attr("class", "btn btn-outline-primary");
-}
+}*/
 
 /*Save Customer*/
 function saveCustomer() {
@@ -93,8 +92,47 @@ function saveCustomer() {
         success: function (res) {
             if (res.status === 200) {
                 alert(res.message);
+                console.log(cusOb);
                 //loadAllCustomers();
             } else {
+                alert(res.data);
+                console.log(cusOb);
+            }
+        },
+        error: function (ob, textStatus, error) {
+            alert(textStatus);
+            console.log(ob.responseText);
+            console.log(cusOb);
+        }
+    });
+
+}
+
+//Check the
+/*function isExists(id) {
+    for (var i of customerDB) {
+        if (id === i.getCustID()) {
+            return true;
+        }
+    }
+    return false;
+
+}*/
+
+/*Delete Customer*/
+function deleteCustomer(id) {
+
+    $.ajax({
+        url:"http://localhost:8080/backend/customer?CusID="+id,
+        method:"DELETE",
+        //data:data,// application/x-www-form-urlencoded
+        success:function (res){
+            if (res.status === 200) {
+                alert(res.message);
+                loadAllCustomers();
+            } else if(res.status === 400){
+                alert(res.message);
+            }else {
                 alert(res.data);
             }
         },
@@ -104,43 +142,45 @@ function saveCustomer() {
         }
     });
 
-}
-
-//Check the
-function isExists(id) {
-    for (var i of customerDB) {
-        if (id === i.getCustID()) {
-            return true;
-        }
-    }
-    return false;
-
-}
-
-/*Delete Customer*/
-function deleteCustomer(id) {
-    for (var i in customerDB) {
-        if (id === customerDB[i].getCustID()) {
-            customerDB.splice(i, 1);
-            return;
-        }
-    }
 
 }
 
 /*Display customer in the Table*/
 function loadAllCustomers() {
     $("#custTableBody").empty();
-    for (var i of customerDB) {
-        /*create a html row*/
-        let row = `<tr><td>${i.getCustID()}</td><td>${i.getCustName()}</td><td>${i.getCustAddress()}</td><td>${i.getCustSalary()}</td></tr>`;
-        /*select the table body and append the row */
-        $("#custTableBody").append(row);
-    }
 
-    //bind the events to the table rows after the row was added
-    $("#custTableBody>tr").click(function () {
-        let cusID = $(this).children(":eq(0)").text();
+    $.ajax({
+        url: "http://localhost:8080/backend/customer?option=GETALL",
+        method: "GET",
+        success: function (res) {
+            if (res.status === 200) {
+                for (const customer of res.data) {
+                    let row = `<tr><td>${customer.id}</td><td>${customer.name}</td><td>${customer.address}</td><td>${customer.salary}</td></tr>`;
+                    $("#custTableBody").append(row);
+
+                }
+
+                bindClickEvents();
+            } else {
+                alert(res.data);
+                console.log(cusOb);
+            }
+        },
+        error: function (ob, textStatus, error) {
+            alert(textStatus);
+            console.log(ob.responseText);
+            console.log(cusOb);
+        }
+    });
+
+
+}
+
+//bind the events to the table rows after the row was added
+function bindClickEvents(){
+    $("#custTableBody>tr").click(function (){
+        //Get values from the selected row
+        let cusID= $(this).children(":eq(0)").text();
         let cusName = $(this).children(":eq(1)").text();
         let cusAddress = $(this).children(":eq(2)").text();
         let cusTP = $(this).children(":eq(3)").text();
@@ -150,15 +190,11 @@ function loadAllCustomers() {
         $("#txtCustName").val(cusName);
         $("#txtCustAddress").val(cusAddress);
         $("#txtCustSalary").val(cusTP);
-
-        $("#btnSaveCust").html("Update Customer");
-        $("#btnSaveCust").attr("class", "btn btn-outline-warning");
-
     });
 }
 
 // search customer
-$("#btnSearchCust").click(function () {
+/*$("#btnSearchCust").click(function () {
     var searchID = $("#txtSearchCust").val();
 
     var response = searchCustomer(searchID);
@@ -171,43 +207,41 @@ $("#btnSearchCust").click(function () {
         clearAllCustTxt();
         alert("No Such a Customer");
     }
-});
+});*/
 
 //Serach Customer
-function searchCustomer(id) {
+/*function searchCustomer(id) {
     for (let i = 0; i < customerDB.length; i++) {
         if (customerDB[i].getCustID() == id) {
             return customerDB[i];
         }
     }
-}
+}*/
 
 //Genereate Customer ID
 function generateCustID() {
-
-    if (customerDB.length !== 0) {
-        let id = customerDB[(customerDB.length) - 1].getCustID();
-        const txt = id.split('C', 2);
-        let newcustID = parseInt(txt[1]) + 1;
-        console.log(newcustID);
-
-        if (newcustID <= 9) {
-            $("#txtCustID").text("C00" + newcustID);
-        } else if (newcustID <= 99) {
-            $("#txtCustID").text("C0" + newcustID);
-        } else if (newcustID <= 999) {
-            $("#txtCustID").text("C" + newcustID);
+    $.ajax({
+        url: "http://localhost:8080/backend/customer?option=GENERATEID",
+        method: "GET",
+        success: function (res) {
+            if (res.status === 200) {
+                $("#txtCustID").text(res.data);
+            } else {
+                alert(res.data);
+            }
+        },
+        error: function (ob, textStatus, error) {
+            alert(textStatus);
+            console.log(ob.responseText);
+            console.log(cusOb);
         }
-
-    } else {
-        $("#txtCustID").text("C001");
-    }
+    });
 
 }
 
 //Customer validation started
 // customer regular expressions
-const cusNameRegEx = /^[A-z ]{5,20}$/;
+/*const cusNameRegEx = /^[A-z ]{5,20}$/;
 const cusAddressRegEx = /^[A-z]{7,}$/;
 const cusSalaryRegEx = /^[0-9]{1,}$/;
 
@@ -314,5 +348,5 @@ function setCustButton() {
 
 $('#btnSaveCust').click(function () {
     checkIfCustValid();
-});
+});*/
 //validation ended

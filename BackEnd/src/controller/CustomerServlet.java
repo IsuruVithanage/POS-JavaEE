@@ -18,6 +18,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 @WebServlet(urlPatterns = "/customer")
 public class CustomerServlet extends HttpServlet {
@@ -28,39 +29,55 @@ public class CustomerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            //String option = req.getParameter("option");
-            //resp.setContentType("application/json");
+            String option = req.getParameter("option");
+            resp.setContentType("application/json");
             Connection connection = ds.getConnection();
             PrintWriter writer = resp.getWriter();
 
             //resp.addHeader("Access-Control-Allow-Origin", "*");
 
+            switch (option){
+                case "GENERATEID":
+                    String custid = customerBO.generateNewID(connection);
+                    JsonObjectBuilder response = Json.createObjectBuilder();
+                    resp.setStatus(HttpServletResponse.SC_CREATED);
+                    response.add("status", 200);
+                    response.add("message", "Successfully Added");
+                    response.add("data", custid);
+                    writer.print(response.build());
+                    break;
 
-            ResultSet rst = connection.prepareStatement("select * from Customer").executeQuery();
-            JsonArrayBuilder arrayBuilder = Json.createArrayBuilder(); // json array
-            while (rst.next()) {
-                String id = rst.getString(1);
-                String name = rst.getString(2);
-                String address = rst.getString(3);
-                double salary = rst.getDouble(4);
+                case "GETALL":
+                    //ResultSet rst = connection.prepareStatement("select * from Customer").executeQuery();
+                    ArrayList<CustomerDTO> allCustomers = customerBO.getAllCustomers(connection);
+                    JsonArrayBuilder arrayBuilder = Json.createArrayBuilder(); // json array
+                    for (CustomerDTO c:allCustomers) {
+                        String id = c.getCustomerId();
+                        String name = c.getCustomerName();
+                        String address = c.getCustomerAddress();
+                        double salary = c.getSalary();
 
-                JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
-                objectBuilder.add("id", id);
-                objectBuilder.add("name", name);
-                objectBuilder.add("address", address);
-                objectBuilder.add("salary", salary);
-                arrayBuilder.add(objectBuilder.build());
+                        JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
+                        objectBuilder.add("id", id);
+                        objectBuilder.add("name", name);
+                        objectBuilder.add("address", address);
+                        objectBuilder.add("salary", salary);
+                        arrayBuilder.add(objectBuilder.build());
+                    }
+
+                    JsonObjectBuilder responsegetall = Json.createObjectBuilder();
+                    responsegetall.add("status", 200);
+                    responsegetall.add("message", "Done");
+                    responsegetall.add("data", arrayBuilder.build());
+                    writer.print(responsegetall.build());
+
+
             }
 
-            JsonObjectBuilder response = Json.createObjectBuilder();
-            response.add("status", 200);
-            response.add("message", "Done");
-            response.add("data", arrayBuilder.build());
-            writer.print(response.build());
 
             connection.close();
 
-        } catch (SQLException throwables) {
+        } catch (SQLException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
         }
 
@@ -105,7 +122,6 @@ public class CustomerServlet extends HttpServlet {
             throwables.printStackTrace();
         }
     }
-
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String customerID = req.getParameter("CusID");
@@ -115,10 +131,8 @@ public class CustomerServlet extends HttpServlet {
 
         try {
             Connection connection = ds.getConnection();
-            PreparedStatement pstm = connection.prepareStatement("Delete from Customer where id=?");
-            pstm.setObject(1, customerID);
 
-            if (pstm.executeUpdate() > 0) {
+            if (customerBO.deleteCustomer(connection,customerID)) {
                 JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
                 objectBuilder.add("status", 200);
                 objectBuilder.add("data", "");
@@ -133,7 +147,7 @@ public class CustomerServlet extends HttpServlet {
             }
             connection.close();
 
-        } catch (SQLException throwables) {
+        } catch (SQLException | ClassNotFoundException throwables) {
             resp.setStatus(200);
             JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
             objectBuilder.add("status", 500);
@@ -144,7 +158,7 @@ public class CustomerServlet extends HttpServlet {
 
     }
 
-    @Override
+/*    @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         JsonReader reader = Json.createReader(req.getReader());
@@ -185,12 +199,6 @@ public class CustomerServlet extends HttpServlet {
             objectBuilder.add("data", throwables.getLocalizedMessage());
             writer.print(objectBuilder.build());
         }
-    }
-
-    /*@Override
-    protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.addHeader("Access-Control-Allow-Origin", "*");
-        resp.addHeader("Access-Control-Allow-Methods", "DELETE, PUT");
-        resp.addHeader("Access-Control-Allow-Headers", "content-Type");
     }*/
+
 }

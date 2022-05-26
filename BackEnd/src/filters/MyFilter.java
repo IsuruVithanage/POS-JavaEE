@@ -24,9 +24,6 @@ public class MyFilter implements Filter {
         HttpServletResponse resp= (HttpServletResponse) servletResponse;
 
         filterChain.doFilter(servletRequest, servletResponse); // proceed request to the servlet
-
-
-
         resp.addHeader("Access-Control-Allow-Origin", "*");
         resp.addHeader("Access-Control-Allow-Methods", "DELETE, PUT");
         resp.addHeader("Access-Control-Allow-Headers", "content-Type");
