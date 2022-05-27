@@ -19,10 +19,10 @@ public class ItemBOImpl implements ItemBO {
         return false;
     }
 */
-    /*@Override
-    public String generateNewID() throws SQLException, ClassNotFoundException {
-        return null;
-    }*/
+    @Override
+    public String generateNewID(Connection connection) throws SQLException, ClassNotFoundException {
+        return itemDAO.generateItemNewID(connection);
+    }
 
    /* @Override
     public List<String> getItemIds() throws SQLException, ClassNotFoundException {
@@ -40,10 +40,10 @@ public class ItemBOImpl implements ItemBO {
         ));
     }
 
-    /*@Override
-    public boolean deleteItem(String id) throws SQLException, ClassNotFoundException {
-        return false;
-    }*/
+    @Override
+    public boolean deleteItem(Connection connection,String id) throws SQLException, ClassNotFoundException {
+        return itemDAO.delete(connection,id);
+    }
 
     /*@Override
     public boolean updateItem(ItemDTO itemDTO) throws SQLException, ClassNotFoundException {
@@ -55,10 +55,20 @@ public class ItemBOImpl implements ItemBO {
         return null;
     }*/
 
-    /*@Override
-    public ArrayList<ItemDTO> getAllItems() throws SQLException, ClassNotFoundException {
-        return null;
-    }*/
+    @Override
+    public ArrayList<ItemDTO> getAllItems(Connection connection) throws SQLException, ClassNotFoundException {
+        ArrayList<Item> items = itemDAO.getAll(connection);
+        ArrayList<ItemDTO> itemDTOS = new ArrayList<>();
+        for (Item i : items) {
+            itemDTOS.add(new ItemDTO(
+                    i.getItemID(),
+                    i.getItemName(),
+                    i.getQty(),
+                    i.getPrice()
+            ));
+        }
+        return itemDTOS;
+    }
 
     /*@Override
     public boolean updateQTY(String itemCode, int qty) throws SQLException, ClassNotFoundException {

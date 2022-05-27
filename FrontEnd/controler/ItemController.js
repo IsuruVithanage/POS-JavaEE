@@ -8,7 +8,7 @@ $("#btnSaveItem").click(function () {
     $("#confirmSaveItem").click(function () {
         saveItem();
         //clearAllItemTxt();
-        //loadAllItems();
+        loadAllItems();
         //generateItemID();
         swal("Success!", "Item has been saved!", "success");
 
@@ -17,20 +17,20 @@ $("#btnSaveItem").click(function () {
 });
 
 // Clear Item Button
-/*$("#btnClearItem").click(function () {
+$("#btnClearItem").click(function () {
     clearAllItemTxt();
     generateItemID();
 
-});*/
+});
 
 /*Clear the text fields*/
-/*function clearAllItemTxt() {
+function clearAllItemTxt() {
     $('#txtItemName,#txtQTY,#txtPrice').val("");
-    $('#txtItemName,#txtQTY,#txtPrice').css('border', '2px solid #ced4da');
-    $("#btnSaveItem").attr('disabled', true);
+    //$('#txtItemName,#txtQTY,#txtPrice').css('border', '2px solid #ced4da');
+    //$("#btnSaveItem").attr('disabled', true);
     loadAllItems();
-    $("#lblprice,#lblqty,#lblItemName").text("");
-}*/
+    //$("#lblprice,#lblqty,#lblItemName").text("");
+}
 
 /*Save Item*/
 function saveItem() {
@@ -75,7 +75,7 @@ function saveItem() {
         error: function (ob, textStatus, error) {
             alert(textStatus);
             console.log(ob.responseText);
-            console.log(cusOb);
+            console.log(itemOb);
         }
     });
 }
@@ -92,17 +92,37 @@ function saveItem() {
 }*/
 
 /*Display Item in the Table*/
-/*function loadAllItems() {
+function loadAllItems() {
     $("#ItemTableBody").empty();
-    for (var i of itemDB) {
-        /!*create a html row*!/
-        let row = `<tr><td>${i.getitemID()}</td><td>${i.getitemName()}</td><td>${i.getQTY()}</td><td>${i.getPrice()}</td></tr>`;
-        /!*select the table body and append the row *!/
-        $("#ItemTableBody").append(row);
-    }
 
-    //bind the events to the table rows after the row was added
-    $("#ItemTableBody>tr").click(function () {
+    $.ajax({
+        url: "http://localhost:8080/backend/item?option=GETALL",
+        method: "GET",
+        success: function (res) {
+            if (res.status === 200) {
+                for (const item of res.data) {
+                    let row = `<tr><td>${item.id}</td><td>${item.name}</td><td>${item.qty}</td><td>${item.price}</td></tr>`;
+                    $("#ItemTableBody").append(row);
+
+                }
+
+                bindClickEvents();
+            } else {
+                alert(res.data);
+            }
+        },
+        error: function (ob, textStatus, error) {
+            alert(textStatus);
+            console.log(ob.responseText);
+        }
+    });
+
+}
+
+//bind the events to the table rows after the row was added
+function bindClickEvents(){
+    $("#ItemTableBody>tr").click(function (){
+        //Get values from the selected row
         let itemID= $(this).children(":eq(0)").text();
         let itemName = $(this).children(":eq(1)").text();
         let qty = $(this).children(":eq(2)").text();
@@ -113,12 +133,49 @@ function saveItem() {
         $("#txtItemName").val(itemName);
         $("#txtQTY").val(qty);
         $("#txtPrice").val(price);
+    });
+}
 
-        $("#btnSaveItem").html("Update Item");
-        $("#btnSaveItem").attr("class","btn btn-outline-warning");
+//Set Delete button
+$("#btnDeleteItem").click(function () {
+    $("#confirmdeleteItem").off("click");
+
+    $("#confirmdeleteItem").click(function () {
+        deleteItem($("#txtItemID").text());
+        clearAllCustTxt();
+        loadAllItems();
+        generateItemID();
 
     });
-}*/
+
+
+});
+
+/*Delete Item*/
+function deleteItem(id) {
+
+    $.ajax({
+        url:"http://localhost:8080/backend/item?ItemID="+id,
+        method:"DELETE",
+        //data:data,// application/x-www-form-urlencoded
+        success:function (res){
+            if (res.status === 200) {
+                alert(res.message);
+                loadAllItems();
+            } else if(res.status === 400){
+                alert(res.message);
+            }else {
+                alert(res.data);
+            }
+        },
+        error: function (ob, textStatus, error) {
+            alert(textStatus);
+            console.log(ob.responseText);
+        }
+    });
+
+
+}
 
 // search Item
 /*$("#btnSearchItem").click(function () {
@@ -145,31 +202,28 @@ function saveItem() {
 }*/
 
 //Genereate Item ID
-/*function generateItemID() {
-    if (itemDB.length !== 0) {
-        let id = itemDB[(itemDB.length) - 1].getitemID();
-        const txt = id.split('I', 2);
-        console.log(txt);
-        let newID = parseInt(txt[1]) + 1;
-        console.log(newID);
-
-        if (newID <= 9) {
-            $("#txtItemID").text("I00" + newID);
-        } else if (newID <= 99) {
-            $("#txtItemID").text("I0" + newID);
-        } else if (newID <= 999) {
-            $("#txtItemID").text("I" + newID);
+function generateItemID() {
+    $.ajax({
+        url: "http://localhost:8080/backend/item?option=GENERATEID",
+        method: "GET",
+        success: function (res) {
+            if (res.status === 200) {
+                $("#txtItemID").text(res.data);
+            } else {
+                alert(res.data);
+            }
+        },
+        error: function (ob, textStatus, error) {
+            alert(textStatus);
+            console.log(ob.responseText);
         }
-
-    } else {
-        $("#txtItemID").text("I001");
-    }
+    });
 
 }
 
 //Customer validation started
 // customer regular expressions
-const itemNameRegEx = /^[A-z ]{5,20}$/;
+/*const itemNameRegEx = /^[A-z ]{5,20}$/;
 const qtyRegEx = /^[0-9]{1,}$/;
 const priceRegEx = /^[0-9]{1,}$/;
 

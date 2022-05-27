@@ -233,7 +233,6 @@ function generateCustID() {
         error: function (ob, textStatus, error) {
             alert(textStatus);
             console.log(ob.responseText);
-            console.log(cusOb);
         }
     });
 

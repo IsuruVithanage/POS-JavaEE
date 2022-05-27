@@ -372,7 +372,8 @@
 
                     <!--Buttons-->
                     <div class="col-6 mt-4 pt-2">
-                        <button type="submit" class="btn btn-danger" id="btnDeleteItem">Delete</button>
+                        <button type="submit" class="btn btn-danger" id="btnDeleteItem" data-bs-toggle="modal"
+                                data-bs-target="#delItem">Delete</button>
                         <button type="submit" class="btn btn-primary" id="btnClearItem">Clear</button>
                         <button class="btn btn-outline-info ms-3" type="button" id="btnSaveItem" data-bs-toggle="modal"
                                 data-bs-target="#sveItem">Save Item
@@ -414,6 +415,28 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
                                         id="confirmSaveItem">Yes
+                                </button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Confirmation modal for delete-->
+                <div class="modal fade" id="delItem" tabindex="-1" aria-labelledby="delCust" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header bg-danger">
+                                <h5 class="modal-title" id="deleItemModalcolor: white" style="color: white">Confirm</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Are you sure that you want to delete this Item ?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                                        id="confirmdeleteItem">Yes
                                 </button>
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
                             </div>
@@ -716,8 +739,8 @@
         $("#mi").css("display", "block");
         $("#mo").css("display", "none");
         $("#mh").css("display", "none");
-        //generateItemID();
-        //loadAllItems();
+        generateItemID();
+        loadAllItems();
 
     });
 

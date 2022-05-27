@@ -30,7 +30,7 @@ public class CustomerServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             String option = req.getParameter("option");
-            resp.setContentType("application/json");
+            /*resp.setContentType("application/json");*/
             Connection connection = ds.getConnection();
             PrintWriter writer = resp.getWriter();
 
