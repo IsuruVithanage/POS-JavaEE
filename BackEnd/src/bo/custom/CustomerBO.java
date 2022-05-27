@@ -6,13 +6,14 @@ import dto.CustomerDTO;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public interface CustomerBO extends SuperBO {
     //boolean ifCustomerExist(String id) throws SQLException, ClassNotFoundException;
 
     String generateNewID(Connection connection) throws SQLException, ClassNotFoundException;
 
-    //List<String> getCustomerIds(Connection connection) throws SQLException, ClassNotFoundException;
+    List<String> getCustomerIds(Connection connection) throws SQLException, ClassNotFoundException;
 
     boolean addCustomer(Connection connection, CustomerDTO customerDTO) throws SQLException, ClassNotFoundException;
 

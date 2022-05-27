@@ -18,6 +18,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet(urlPatterns = "/item")
 public class ItemServlet extends HttpServlet {
@@ -64,18 +65,46 @@ public class ItemServlet extends HttpServlet {
                         arrayBuilder.add(objectBuilder.build());
                     }
 
+
                     JsonObjectBuilder responsegetall = Json.createObjectBuilder();
                     responsegetall.add("status", 200);
                     responsegetall.add("message", "Done");
                     responsegetall.add("data", arrayBuilder.build());
                     writer.print(responsegetall.build());
+                    break;
+
+                case "GETIDS":
+                    List<String> allCustomersids = itemBO.getItemIds(connection);
+                    JsonArrayBuilder arrayBuilderid = Json.createArrayBuilder(); // json array
+                    for (String id:allCustomersids) {
+
+                        JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
+                        arrayBuilderid.add(id);
+                    }
+
+                    JsonObjectBuilder responsegetallid = Json.createObjectBuilder();
+                    responsegetallid.add("status", 200);
+                    responsegetallid.add("message", "Done");
+                    responsegetallid.add("data", arrayBuilderid.build());
+                    writer.print(responsegetallid.build());
+                    break;
 
                 case "SEARCH":
+                    String itemID = req.getParameter("ItemID");
+                    ItemDTO itemDTO = itemBO.searchItem(connection, itemID);
+                    JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
+                    objectBuilder.add("id", itemDTO.getItemID());
+                    objectBuilder.add("name", itemDTO.getItemName());
+                    objectBuilder.add("qty", itemDTO.getQty());
+                    objectBuilder.add("price", itemDTO.getPrice());
 
-
+                    JsonObjectBuilder responsesearch = Json.createObjectBuilder();
+                    responsesearch.add("status", 200);
+                    responsesearch.add("message", "Done");
+                    responsesearch.add("data", objectBuilder.build());
+                    writer.print(responsesearch.build());
+                    break;
             }
-
-
             connection.close();
 
         } catch (SQLException | ClassNotFoundException throwables) {

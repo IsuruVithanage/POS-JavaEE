@@ -9,6 +9,7 @@ import entity.Customer;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class CustomerBOImpl implements CustomerBO {
 
@@ -24,10 +25,10 @@ public class CustomerBOImpl implements CustomerBO {
         return customerDAO.generateNewID(connection);
     }
 
-    /*@Override
+    @Override
     public List<String> getCustomerIds(Connection connection) throws SQLException, ClassNotFoundException {
         return customerDAO.getCustomerIds(connection);
-    }*/
+    }
 
     @Override
     public boolean addCustomer(Connection connection, CustomerDTO customerDTO) throws SQLException, ClassNotFoundException {

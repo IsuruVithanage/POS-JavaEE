@@ -8,10 +8,11 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class CustomerDAOImpl implements CustomerDAO {
 
-    /*@Override
+    @Override
     public List<String> getCustomerIds(Connection connection) throws SQLException, ClassNotFoundException {
         ResultSet rst = CrudUtil.executeQuery(connection,"SELECT * FROM Customer");
         List<String> ids = new ArrayList<>();
@@ -21,7 +22,7 @@ public class CustomerDAOImpl implements CustomerDAO {
             );
         }
         return ids;
-    }*/
+    }
 
     /*@Override
     public boolean ifCustomerExist(String id) throws SQLException, ClassNotFoundException {

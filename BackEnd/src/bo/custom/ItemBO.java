@@ -13,7 +13,7 @@ public interface ItemBO extends SuperBO {
 
     String generateNewID(Connection connection) throws SQLException, ClassNotFoundException;
 
-    //List<String> getItemIds() throws SQLException, ClassNotFoundException;
+    List<String> getItemIds(Connection connection) throws SQLException, ClassNotFoundException;
 
     boolean addItem(Connection connection,ItemDTO itemDTO) throws SQLException, ClassNotFoundException;
 
@@ -21,7 +21,7 @@ public interface ItemBO extends SuperBO {
 
     //boolean updateItem(ItemDTO itemDTO) throws SQLException, ClassNotFoundException;
 
-    //ItemDTO searchItem(String id) throws SQLException, ClassNotFoundException;
+    ItemDTO searchItem(Connection connection,String id) throws SQLException, ClassNotFoundException;
 
     ArrayList<ItemDTO> getAllItems(Connection connection) throws SQLException, ClassNotFoundException;
 

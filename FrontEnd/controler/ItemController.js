@@ -153,7 +153,6 @@ $("#btnDeleteItem").click(function () {
 
 /*Delete Item*/
 function deleteItem(id) {
-
     $.ajax({
         url:"http://localhost:8080/backend/item?ItemID="+id,
         method:"DELETE",
@@ -173,8 +172,6 @@ function deleteItem(id) {
             console.log(ob.responseText);
         }
     });
-
-
 }
 
 // search Item

@@ -19,6 +19,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet(urlPatterns = "/customer")
 public class CustomerServlet extends HttpServlet {
@@ -71,8 +72,35 @@ public class CustomerServlet extends HttpServlet {
                     responsegetall.add("data", arrayBuilder.build());
                     writer.print(responsegetall.build());
 
-                case "SEARCH":
+                case "GETIDS":
+                    List<String> allCustomersids = customerBO.getCustomerIds(connection);
+                    JsonArrayBuilder arrayBuilderid = Json.createArrayBuilder(); // json array
+                    for (String id:allCustomersids) {
 
+                        JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
+                        arrayBuilderid.add(id);
+                    }
+
+                    JsonObjectBuilder responsegetallid = Json.createObjectBuilder();
+                    responsegetallid.add("status", 200);
+                    responsegetallid.add("message", "Done");
+                    responsegetallid.add("data", arrayBuilderid.build());
+                    writer.print(responsegetallid.build());
+
+                case "SEARCH":
+                    String customerID = req.getParameter("CusID");
+                    CustomerDTO customerDTO = customerBO.searchCustomer(connection, customerID);
+                    JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
+                    objectBuilder.add("id", customerDTO.getCustomerId());
+                    objectBuilder.add("name", customerDTO.getCustomerName());
+                    objectBuilder.add("address", customerDTO.getCustomerAddress());
+                    objectBuilder.add("salary", customerDTO.getSalary());
+
+                    JsonObjectBuilder responsesearch = Json.createObjectBuilder();
+                    responsesearch.add("status", 200);
+                    responsesearch.add("message", "Done");
+                    responsesearch.add("data", objectBuilder.build());
+                    writer.print(responsesearch.build());
 
             }
 

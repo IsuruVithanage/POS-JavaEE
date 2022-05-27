@@ -13,7 +13,7 @@ public interface ItemDAO extends CrudDAO<Item, String> {
 
     String generateItemNewID(Connection connection) throws SQLException, ClassNotFoundException;
 
-    //List<String> getAllItemIds() throws SQLException, ClassNotFoundException;
+    List<String> getAllItemIds(Connection connection) throws SQLException, ClassNotFoundException;
 
     //boolean updateQTY(String itemCode, int qty) throws SQLException, ClassNotFoundException;
 

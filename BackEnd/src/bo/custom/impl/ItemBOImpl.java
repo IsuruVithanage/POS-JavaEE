@@ -24,10 +24,10 @@ public class ItemBOImpl implements ItemBO {
         return itemDAO.generateItemNewID(connection);
     }
 
-   /* @Override
-    public List<String> getItemIds() throws SQLException, ClassNotFoundException {
-        return null;
-    }*/
+    @Override
+    public List<String> getItemIds(Connection connection) throws SQLException, ClassNotFoundException {
+        return itemDAO.getAllItemIds(connection);
+    }
 
     @Override
     public boolean addItem(Connection connection,ItemDTO itemDTO) throws SQLException, ClassNotFoundException {
@@ -50,10 +50,16 @@ public class ItemBOImpl implements ItemBO {
         return false;
     }*/
 
-    /*@Override
-    public ItemDTO searchItem(String id) throws SQLException, ClassNotFoundException {
-        return null;
-    }*/
+    @Override
+    public ItemDTO searchItem(Connection connection,String id) throws SQLException, ClassNotFoundException {
+        Item i = itemDAO.search(connection,id);
+        return new ItemDTO(
+                i.getItemID(),
+                i.getItemName(),
+                i.getQty(),
+                i.getPrice()
+        );
+    }
 
     @Override
     public ArrayList<ItemDTO> getAllItems(Connection connection) throws SQLException, ClassNotFoundException {

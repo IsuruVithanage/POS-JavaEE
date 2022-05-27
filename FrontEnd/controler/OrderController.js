@@ -2,17 +2,50 @@
 //Load All Customer ID s in to the ComboBox
 function loadAllCustID() {
     $("#CustomerOID").empty();
-    for (var i = 0; i < customerDB.length; i++) {
-        $("#CustomerOID").append(new Option(customerDB[i].getCustID()));
-    }
+    $.ajax({
+        url: "http://localhost:8080/backend/customer?option=GETIDS",
+        method: "GET",
+        success: function (res) {
+            if (res.status === 200) {
+                for (const id of res.data) {
+                    console.log(id);
+                    $("#CustomerOID").append(new Option(id));
+                }
+
+            } else {
+                alert(res.data);
+            }
+        },
+        error: function (ob, textStatus, error) {
+            alert(textStatus);
+            console.log(ob.responseText);
+        }
+    });
 }
 
 //Load All Item ID s in to the ComboBox
 function loadAllItemID() {
     $("#itemID").empty();
-    for (var i = 0; i < itemDB.length; i++) {
-        $("#itemID").append(new Option(itemDB[i].getitemID()));
-    }
+
+    $.ajax({
+        url: "http://localhost:8080/backend/item?option=GETIDS",
+        method: "GET",
+        success: function (res) {
+            if (res.status === 200) {
+                for (const id of res.data) {
+                    console.log(id);
+                    $("#itemID").append(new Option(id));
+                }
+
+            } else {
+                alert(res.data);
+            }
+        },
+        error: function (ob, textStatus, error) {
+            alert(textStatus);
+            console.log(ob.responseText);
+        }
+    });
 }
 
 
@@ -20,21 +53,31 @@ function loadAllItemID() {
 $("#CustomerOID").click(function () {
     var id = $('#CustomerOID').find(":selected").text();
 
-    for (var i = 0; i < customerDB.length; i++) {
-        if (id === customerDB[i].getCustID()) {
-            $("#Name").val(customerDB[i].getCustName());
-            $("#Salary").val(customerDB[i].getCustSalary());
-            $("#address").val(customerDB[i].getCustAddress());
-            return;
+    $.ajax({
+        url: "http://localhost:8080/backend/customer?option=SEARCH&CusID="+id,
+        method: "GET",
+        success: function (res) {
+            if (res.status === 200) {
+                console.log(res.data);
+                $("#Name").val(res.data.id);
+                $("#Salary").val(res.data.salary);
+                $("#address").val(res.data.address);
+            } else {
+                alert(res.data);
+            }
+        },
+        error: function (ob, textStatus, error) {
+            alert(textStatus);
+            console.log(ob.responseText);
         }
-    }
+    });
 });
 
 //Add listener to the Item ComboBox
 $("#itemID").click(function () {
     var id = $('#itemID').find(":selected").text();
 
-    for (var i = 0; i < itemDB.length; i++) {
+    /*for (var i = 0; i < itemDB.length; i++) {
         if (id === itemDB[i].getitemID()) {
             $("#iname").val(itemDB[i].getitemName());
             $("#qty").val(itemDB[i].getQTY());
@@ -49,14 +92,34 @@ $("#itemID").click(function () {
             }
 
         }
-    }
+    }*/
+
+    $.ajax({
+        url: "http://localhost:8080/backend/item?option=SEARCH&ItemID="+id,
+        method: "GET",
+        success: function (res) {
+            if (res.status === 200) {
+                console.log(res.data);
+                $("#iname").val(res.data.name);
+                $("#qty").val(res.data.qty);
+                $("#price").val(res.data.price);
+                $("#btnAddItem").attr('disabled', false);
+            } else {
+                alert(res.data);
+            }
+        },
+        error: function (ob, textStatus, error) {
+            alert(textStatus);
+            console.log(ob.responseText);
+        }
+    });
 
 
 });
 
 
 //Genereate Customer ID
-function generateOrderID() {
+/*function generateOrderID() {
     console.log(true);
     if (orderDB.length !== 0) {
         let id = orderDB[(orderDB.length) - 1].getoID();
@@ -75,10 +138,10 @@ function generateOrderID() {
         $("#oID").val("O001");
     }
 
-}
+}*/
 
 //Set the listner to the add button
-$("#btnAddItem").click(function () {
+/*$("#btnAddItem").click(function () {
     if ($("#iname").val().length > 0 && $("#oqty").val().length > 0 && $.isNumeric($("#oqty").val())) {
         if (parseInt($("#oqty").val()) > parseInt($("#qty").val())) {
             swal("Warning!", "There are no enough stock for this order!", "warning");
@@ -91,10 +154,10 @@ $("#btnAddItem").click(function () {
         swal("Warning!", "Order cannot add the item please check!", "warning");
     }
 
-});
+});*/
 
 //Set the listner to delete button
-$("#btndeleteoitem").click(function () {
+/*$("#btndeleteoitem").click(function () {
     let id = $('#itemID').find(":selected").text();
     for (var i in tempItemList) {
         if (id === tempItemList[i].getitemDetailID()) {
@@ -105,9 +168,10 @@ $("#btndeleteoitem").click(function () {
         }
 
     }
-});
+});*/
 
 //Cancel Order Button
+/*
 $("#cancelOrder").click(function () {
     $("#confirmdeleteOrder").off("click");
 
@@ -132,9 +196,10 @@ $("#cancelOrder").click(function () {
 
 
 });
+*/
 
 //Clear All Button
-$("#btnclearAll").click(function () {
+/*$("#btnclearAll").click(function () {
     $("#txtSearchOrder").val("");
     $("#txtCash,#txtBalance,#txtDiscount").val("");
     clearAllordercustTxt();
@@ -150,10 +215,10 @@ $("#btnclearAll").click(function () {
     $("#btnPlaceOrder").html("Purchase Order");
     $("#btnPlaceOrder").attr("class", "btn btn-success");
     $("#txtSearchOrder").val("");
-});
+});*/
 
 //Place Order Button
-$("#btnPlaceOrder").click(function () {
+/*$("#btnPlaceOrder").click(function () {
 
     $("#confirmSaveOrder").off("click");
 
@@ -171,19 +236,19 @@ $("#btnPlaceOrder").click(function () {
         }
     });
 
-});
+});*/
 
 //Discount Add Button
-$("#btnAdd").click(function () {
+/*$("#btnAdd").click(function () {
     if ($("#txtCash").val().length>0 && $.isNumeric($("#txtCash").val())) {
         balanceCal();
     }else {
         swal("Warning!", "Cash cannot be added please check!", "warning");
     }
-});
+});*/
 
 //Item Update button
-$("#btnupdateOitem").click(function () {
+/*$("#btnupdateOitem").click(function () {
     if ($("#oqty").val().length > 0) {
         let id = $('#itemID').find(":selected").text();
         let qty = $('#oqty').val();
@@ -207,10 +272,10 @@ $("#btnupdateOitem").click(function () {
     }
 
 
-});
+});*/
 
 // search customer button
-$("#btnSearchOrder").click(function () {
+/*$("#btnSearchOrder").click(function () {
 
     var searchID = $("#txtSearchOrder").val();
 
@@ -239,10 +304,10 @@ $("#btnSearchOrder").click(function () {
         $("#txtSearchOrder").val("");
         swal("Warning!", "Order Not Found!", "warning");
     }
-});
+});*/
 
 /*Add a item*/
-function addItem() {
+/*function addItem() {
     $("#btnPlaceOrder").attr('disabled', false);
     //gather Item information
     let itemID = $('#itemID').find(":selected").text();
@@ -261,16 +326,16 @@ function addItem() {
         }
     } else {
         //create Object
-        /*console.log(true);*/
+        /!*console.log(true);*!/
         var item = new ItemDetail(itemID, itemName, itemPrice, oqty, qty);
         tempItemList.push(item);
         $("#txtTotal,#txtSubTotal").text(updateTotal(itemPrice * oqty));
 
     }
-}
+}*/
 
 //Place the order
-function placeOrder() {
+/*function placeOrder() {
     let oID = $("#oID").val();
     let date = $("#date").val();
     let custID = $('#CustomerOID').find(":selected").text();
@@ -301,10 +366,10 @@ function placeOrder() {
     }
 
 
-}
+}*/
 
 //Check whether the order is exists or not
-function isOrderExists(id) {
+/*function isOrderExists(id) {
     for (var i of orderDB) {
         if (id === i.getoID()) {
             return true;
@@ -312,10 +377,10 @@ function isOrderExists(id) {
     }
     return false;
 
-}
+}*/
 
 //increment item qty
-function increItemQTY() {
+/*function increItemQTY() {
     for (var i of tempItemList) {
         for (var j of itemDB) {
             if (j.getitemID() === i.getitemDetailID()) {
@@ -326,10 +391,10 @@ function increItemQTY() {
 
     }
 
-}
+}*/
 
 //increment item qty
-function decreItemQTY() {
+/*function decreItemQTY() {
     for (var i of tempItemList) {
         for (var j of itemDB) {
             if (j.getitemID() === i.getitemDetailID()) {
@@ -340,9 +405,10 @@ function decreItemQTY() {
 
     }
 
-}
+}*/
 
 //Calculate balance
+/*
 function balanceCal() {
     const total = parseInt($("#txtTotal").text().split('R', 1));
     var per = $("#txtDiscount").val();
@@ -352,9 +418,10 @@ function balanceCal() {
     $("#txtBalance").val(cash - (total - (total * dis)));
 
 }
+*/
 
 //Check the item is in the item list
-function isExistsItemDetail(id) {
+/*function isExistsItemDetail(id) {
     for (var i of tempItemList) {
         if (id === i.getitemDetailID()) {
             return true;
@@ -362,56 +429,56 @@ function isExistsItemDetail(id) {
     }
     return false;
 
-}
+}*/
 
 //Update the Total
-function updateTotal(ammount) {
+/*function updateTotal(ammount) {
     const txt = $("#txtTotal").text().split('R', 1);
     return (parseInt(txt) + ammount) + "Rs/=";
-}
+}*/
 
 //Calculate Total
-function calculateTotal() {
+/*function calculateTotal() {
     var total = 0;
     for (var i of tempItemList) {
         total = total + (i.getitemPrice() * i.getbuyQTY());
     }
     return total + "Rs/=";
 
-}
+}*/
 
 
 //Get Customer Data
-function getCustomerData(id) {
+/*function getCustomerData(id) {
     for (var i of customerDB) {
         if (id === i.getCustID()) {
             return i;
         }
     }
-}
+}*/
 
 //Serach Order
-function searchOrder(id) {
+/*function searchOrder(id) {
     for (let i = 0; i < orderDB.length; i++) {
         if (orderDB[i].getoID() === id) {
             return orderDB[i];
         }
     }
-}
+}*/
 
 
 /*Display customer in the Table*/
-function loadAllBoughtItems() {
+/*function loadAllBoughtItems() {
     $("#OtblBody>tr").off("click");
 
     $("#OtblBody").empty();
     for (var i of tempItemList) {
-        /*create a html row*/
+        /!*create a html row*!/
         var itemPrice = i.getitemPrice();
         var buyQTY = i.getbuyQTY();
 
         let row = `<tr><td>${i.getitemDetailID()}</td><td>${i.getitemDetailName()}</td><td>${itemPrice}</td><td>${buyQTY}</td><td>${buyQTY * itemPrice}</td></tr>`;
-        /*select the table body and append the row */
+        /!*select the table body and append the row *!/
         $("#OtblBody").append(row);
     }
 
@@ -436,34 +503,35 @@ function loadAllBoughtItems() {
         $("#btnupdateOitem").attr('disabled', false);
 
     });
-}
+}*/
 
 //Return the item QTY on hand
-function getQTYOnHand(id) {
+/*function getQTYOnHand(id) {
     for (var i of itemDB) {
         if (id === i.getitemID()) {
             return i.getQTY();
         }
     }
 
-}
+}*/
 
 /*Clear the text item fields*/
-function clearAllorderitemTxt() {
+/*function clearAllorderitemTxt() {
     $('#iname,#price,#oqty,#qty').val("");
     $("#btnAddItem").attr('disabled', true);
     loadAllBoughtItems();
-}
+}*/
 
 //Clear customer txt fields
-function clearAllordercustTxt() {
+/*function clearAllordercustTxt() {
     $('#Name,#Salary,#address').val("");
     $('#date').val("");
     $("#btnAddItem").attr('disabled', true);
     loadAllBoughtItems();
-}
+}*/
 
 //Validation
+/*
 const orderRegEx = /^[0-9]{1,}$/;
 
 //Validation for item qty
@@ -487,4 +555,5 @@ $('#txtCash').on('keyup', function () {
 
     }
 });
+*/
 

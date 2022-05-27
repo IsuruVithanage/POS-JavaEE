@@ -28,10 +28,17 @@ public class ItemDAOImpl implements ItemDAO {
         }
     }
 
-    /*@Override
-    public List<String> getAllItemIds() throws SQLException, ClassNotFoundException {
-        return null;
-    }*/
+    @Override
+    public List<String> getAllItemIds(Connection connection) throws SQLException, ClassNotFoundException {
+        ResultSet rst = CrudUtil.executeQuery(connection,"SELECT * FROM Item");
+        List<String> ids = new ArrayList<>();
+        while (rst.next()) {
+            ids.add(
+                    rst.getString(1)
+            );
+        }
+        return ids;
+    }
 
     /*@Override
     public boolean updateQTY(String itemCode, int qty) throws SQLException, ClassNotFoundException {
